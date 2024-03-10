@@ -11,17 +11,15 @@ exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Vérifier si l'utilisateur existe dans la base de données
     const user = await models.t_compte_cpt.findOne({
-      where: { cpt_login: username, cpt_etat: 1 },
-      attributes: ["cpt_login", "cpt_type", "cpt_mdp"], // Sélectionnez les colonnes nécessaires
+      where: { cpt_login: username.toLowerCase(), cpt_etat: 1 },
+      attributes: ["cpt_login", "cpt_type", "cpt_mdp"], 
     });
 
-    // Si l'utilisateur n'existe pas ou si le mot de passe est incorrect, renvoyer une erreur d'authentification
     if (!user) {
       return res.status(401).json({ message: "Nom d'utilisateur incorrect" });
     }
-    let firstCon = password === username;
+    let firstCon = password === username.toLowerCase();
 
     let verif1 = await bcrypt.compare(password, user.cpt_mdp);
 
@@ -99,7 +97,6 @@ exports.createUserStudent = async (req, res) => {
     const { nom, prenom, email, master, annee } = req.body;
     const nomUti = prenom.toLowerCase() + "." + nom.toLowerCase() + annee;
 
-    // Vérifier si l'utilisateur existe déjà avec le même e-mail
     const existingUser = await models.t_student_stu.findOne({
       where: { stu_email: email },
     });

@@ -326,7 +326,7 @@ exports.createAdmin = async (req, res) => {
 
     const currentDate = sequelize.literal("CURRENT_TIMESTAMP");
 
-    const nomUti = firstName + "." + lastName;
+    const nomUti = firstName.toLowerCase() + "." + lastName.toLowerCase();
 
     const salt = await bcrypt.genSalt();
 

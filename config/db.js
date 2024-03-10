@@ -1,16 +1,7 @@
-// Configuration de la base de données MySQL
-module.exports = {
-  HOST: "mysql-masteregel.alwaysdata.net",
-  USER: "350248",
-  PASSWORD: "MasterEgel2024!",
-  DB: "masteregel_db",
-};
-
 const { Sequelize } = require("sequelize");
-const dbConfig = require("./db");
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
+const sequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PASSWORD, {
+  host: process.env.HOST,
   dialect: "mysql",
 });
 
