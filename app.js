@@ -21,9 +21,9 @@ app.use(cors());
 
 // app.use(express.static("./client/build"))
 
-app.use("/", (_, res) => {
-  res.send("Hello word !")
-})
+// app.use("/", (_, res) => {
+//   res.send("Hello word !")
+// })
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
