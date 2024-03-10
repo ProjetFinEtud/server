@@ -4,7 +4,10 @@ const sequelize = require("../config/db");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
 const { generateRandomPassword } = require("../function/function.js");
-const { sendEmailWelcome, sendEmailForgotPassword } = require("../function/mailerApi.js");
+const {
+  sendEmailWelcome,
+  sendEmailForgotPassword,
+} = require("../function/mailerApi.js");
 require("dotenv").config();
 
 exports.loginUser = async (req, res) => {
@@ -13,7 +16,7 @@ exports.loginUser = async (req, res) => {
 
     const user = await models.t_compte_cpt.findOne({
       where: { cpt_login: username.toLowerCase(), cpt_etat: 1 },
-      attributes: ["cpt_login", "cpt_type", "cpt_mdp"], 
+      attributes: ["cpt_login", "cpt_type", "cpt_mdp"],
     });
 
     if (!user) {
@@ -32,7 +35,6 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: "Mot de passe incorrect" });
     }
 
-    // Générer un jeton JWT avec les données de l'utilisateur
     const token = jwt.sign(
       { username: user.cpt_login, userType: user.cpt_type },
       process.env.SECRETKEY,
@@ -43,10 +45,10 @@ exports.loginUser = async (req, res) => {
 
     const currentDate = sequelize.literal("CURRENT_TIMESTAMP");
 
-     await models.t_compte_cpt.update(
-      {cpt_update : currentDate},
-      {where : {cpt_login : username}},
-    )
+    await models.t_compte_cpt.update(
+      { cpt_update: currentDate },
+      { where: { cpt_login: username } }
+    );
 
     if (user.cpt_type === "admin") {
       res.status(202).json({ token });
@@ -182,7 +184,7 @@ exports.createUserExStudent = async (req, res) => {
       where: { exs_email: email },
     });
 
-    console.log("les années : " + annee + " " + annee_debut + " " + annee_fin)
+    console.log("les années : " + annee + " " + annee_debut + " " + annee_fin);
     if (existingUser) {
       return res
         .status(400)
@@ -231,7 +233,6 @@ exports.createUserExStudent = async (req, res) => {
       dom_id: domaine,
     });
 
-
     if (
       (nom_poste && nom_entreprise) ||
       description ||
@@ -246,8 +247,7 @@ exports.createUserExStudent = async (req, res) => {
         pos_fin: parseInt(annee_fin),
         exs_id: exstudent.exs_id,
       });
-    }else{
-      
+    } else {
       await models.t_poste_pos.create({
         pre_id: 1,
         pos_entreprise: "Aucun",
@@ -259,8 +259,8 @@ exports.createUserExStudent = async (req, res) => {
     // Envoyer un email de confirmation
     const response = await sendEmailWelcome(email);
 
-    if(response === 400){
-      return res.status(401).message("Adresse email invalide")
+    if (response === 400) {
+      return res.status(401).message("Adresse email invalide");
     }
 
     res
@@ -315,7 +315,7 @@ exports.Updatepass = async (req, res) => {
 exports.ResetPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    var existingUser = null
+    var existingUser = null;
 
     const existingExsUser = await models.t_exstudent_exs.findOne({
       include: [
@@ -329,7 +329,7 @@ exports.ResetPassword = async (req, res) => {
           attributes: ["cpt_etat", "cpt_type", "cpt_creation", "cpt_login"],
         },
       ],
-      where: { exs_email : email },
+      where: { exs_email: email },
     });
     const existingStuUser = await models.t_student_stu.findOne({
       include: [
@@ -343,25 +343,23 @@ exports.ResetPassword = async (req, res) => {
           attributes: ["cpt_etat", "cpt_type", "cpt_creation", "cpt_login"],
         },
       ],
-      where: { stu_email : email },
+      where: { stu_email: email },
     });
 
-    if(existingExsUser){
-      existingUser = existingExsUser
-    }else{
-      existingUser = existingStuUser
+    if (existingExsUser) {
+      existingUser = existingExsUser;
+    } else {
+      existingUser = existingStuUser;
     }
-
 
     if (!existingUser) {
       return res.status(400).json({ message: "L'utilisateur n'existe pas" });
     }
 
-
     // Générer un sel pour le hachage avec bcrypt
     const salt = await bcrypt.genSalt();
 
-    const password = generateRandomPassword(7)
+    const password = generateRandomPassword(7);
 
     // Hacher le mot de passe avec le sel
     const hashpass = await bcrypt.hash(password, salt);
@@ -371,7 +369,7 @@ exports.ResetPassword = async (req, res) => {
       { where: { cpt_login: existingUser.cpt_login } }
     );
 
-    sendEmailForgotPassword(email, password)
+    sendEmailForgotPassword(email, password);
 
     res.status(200).json({ message: "Mot de passe mise à jour avec succès" });
   } catch (err) {
