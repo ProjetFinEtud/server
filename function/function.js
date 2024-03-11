@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const multer = require("multer")
 const bcrypt = require("bcryptjs");
+const express = require('express');
 // Fonction pour hacher un mot de passe avec SHA-256
 function hashPassword(password) {
   const pass = password + "MasterEgel";
@@ -35,7 +36,7 @@ async function  message_id (stu_id, exs_id){
 
 const storage = multer.diskStorage({
   destination:function(req, file, cb){
-    cb(null, "/images/")
+    cb(null, express.static(path.join(__dirname, '../../client/public/upload')))
   },
   filename:function(req, file, cb){
     cb(null, Date.now() + file.originalname) 
