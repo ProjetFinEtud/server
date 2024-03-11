@@ -118,7 +118,6 @@ exports.createUserStudent = async (req, res) => {
         .json({ message: "Un utilisateur avec ce pseudo existe déjà" });
     }
 
-    // Générer un sel pour le hachage avec bcrypt
     const salt = await bcrypt.genSalt();
 
     // Hacher le mot de passe avec le sel
