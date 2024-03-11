@@ -120,7 +120,6 @@ exports.createUserStudent = async (req, res) => {
 
     const salt = await bcrypt.genSalt();
 
-    // Hacher le mot de passe avec le sel
     const password = await bcrypt.hash(nomUti, salt);
 
     // date actuelle
