@@ -83,6 +83,7 @@ exports.verifAuth = async (req, res) => {
     const decoded = jwt.verify(accessToken, "secretkey");
     console.log(decoded);
     if (decoded.userType === "admin") {
+      console.log("OKOKOKOKKOKOOKKOKOKOKOKOKOKO")
       res.status(202).json("Utilisateur Admin");
     } else if (decoded.userType === "exStudent") {
       res.status(203).json("Utilisateur Ancien Etudiant");
