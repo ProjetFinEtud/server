@@ -552,7 +552,6 @@ exports.activeUsers = async (req, res) => {
           existingUser.cpt_login,
           existingUser.cpt_login
         );
-        console.log(validation);
       })
     );
 
