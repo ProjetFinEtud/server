@@ -547,7 +547,7 @@ exports.activeUsers = async (req, res) => {
           { where: { cpt_login: pseudo } }
         );
         console.log(attribut_mail);
-        const validation = sendEmailValidation(
+         await sendEmailValidation(
           existingUser[attribut_mail],
           existingUser.cpt_login,
           existingUser.cpt_login
