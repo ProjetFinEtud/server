@@ -3,8 +3,7 @@ const bcrypt = require("bcryptjs");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
 const { sendEmailValidation, sendDeletUserIvalide } = require("../function/mailerApi.js");
-const { sendIdentifiantEmail, sendSupEmail } = require("../function/mailer.js");
-const { message_id } = require("../function/function.js");
+
 
 exports.getAllUsers = async (req, res) => {
   try {

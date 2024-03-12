@@ -83,7 +83,6 @@ exports.verifAuth = async (req, res) => {
     const decoded = jwt.verify(accessToken, "secretkey");
     console.log(decoded);
     if (decoded.userType === "admin") {
-      console.log("OKOKOKOKKOKOOKKOKOKOKOKOKOKO")
       res.status(202).json("Utilisateur Admin");
     } else if (decoded.userType === "exStudent") {
       res.status(203).json("Utilisateur Ancien Etudiant");
@@ -285,15 +284,12 @@ exports.Updatepass = async (req, res) => {
     }
     let verif = await bcrypt.compareSync(password, existingUser.cpt_mdp);
 
-    console.log(verif);
     if (!verif) {
       return res.status(401).json({ message: "Mot de passe incorrect" });
     }
 
     // Générer un sel pour le hachage avec bcrypt
     const salt = await bcrypt.genSalt();
-
-    console.log(salt);
 
     // Hacher le mot de passe avec le sel
     const hashpass = await bcrypt.hash(newpassword, salt);
