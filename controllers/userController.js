@@ -533,10 +533,10 @@ exports.activeUsers = async (req, res) => {
           }));
 
         if (existingUserExs) {
-          attribut_mail = "stu_email";
+          attribut_mail = "exs_email";
           existingUser = existingUserExs;
         } else if (existingUserStu) {
-          attribut_mail = "exs_email";
+          attribut_mail = "stu_email";
           existingUser = existingUserStu;
         } else {
           return res.status(400).send("L'identifiant n'existe pas !");
