@@ -2,8 +2,10 @@ const sequelize = require("../config/db");
 const bcrypt = require("bcryptjs");
 var initModels = require("../models/init-models");
 var models = initModels(sequelize);
-const { sendEmailValidation, sendDeletUserIvalide } = require("../function/mailerApi.js");
-
+const {
+  sendEmailValidation,
+  sendDeletUserIvalide,
+} = require("../function/mailerApi.js");
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -104,7 +106,7 @@ exports.changeLocalisation = async (req, res) => {
   console.log(req.body);
   try {
     const columns = await models.t_exstudent_exs.update(
-      { exs_laltitude: lat, exs_longitude : lng },
+      { exs_laltitude: lat, exs_longitude: lng },
       { where: { cpt_login: username } }
     );
     res.json({ message: "Modification éffectuer" });
@@ -165,7 +167,7 @@ exports.deleteUser = async (req, res) => {
       await models.t_exstudent_exs.destroy({
         where: { exs_id: user_id },
       });
-  
+
       mail = "exs_email";
     } else if (user_type === "student") {
       existingUser = await await models.t_student_stu.findOne({
@@ -197,9 +199,9 @@ exports.deleteUser = async (req, res) => {
   }
 };
 exports.userDeletehisAccount = async (req, res) => {
-  const username = req.user.username
-  const user_type = req.user.userType
-  const raisonSup = req.body.raison
+  const username = req.user.username;
+  const user_type = req.user.userType;
+  const raisonSup = req.body.raison;
   let mail;
   var existingUser;
   try {
@@ -217,7 +219,7 @@ exports.userDeletehisAccount = async (req, res) => {
       await models.t_exstudent_exs.destroy({
         where: { exs_id: existingUser.exs_id },
       });
-  
+
       mail = "exs_email";
     } else if (user_type === "student") {
       existingUser = await await models.t_student_stu.findOne({
@@ -345,10 +347,8 @@ exports.createAdmin = async (req, res) => {
     await models.t_admin_adm.create({
       adm_nom: firstName,
       adm_prenom: lastName,
-      cpt_login:nomUti
+      cpt_login: nomUti,
     });
-
-
 
     res.status(200).json({ message: "Poste créé avec succès", user: newUser });
   } catch (err) {
@@ -539,21 +539,20 @@ exports.activeUsers = async (req, res) => {
           attribut_mail = "exs_email";
           existingUser = existingUserStu;
         } else {
-          console.log("Utilisateur non existant" + pseudo);
+          return res.status(400).send("L'identifiant n'existe pas !");
         }
 
         await models.t_compte_cpt.update(
           { cpt_etat: 1 },
           { where: { cpt_login: pseudo } }
         );
-        if (existingUserExs || existingUserStu) {
-          console.log(attribut_mail);
-          sendEmailValidation(
-            existingUser[attribut_mail],
-            existingUser.cpt_login,
-            existingUser.cpt_login
-          );
-        }
+        console.log(attribut_mail);
+        const validation = sendEmailValidation(
+          existingUser[attribut_mail],
+          existingUser.cpt_login,
+          existingUser.cpt_login
+        );
+        console.log(validation);
       })
     );
 
@@ -591,7 +590,14 @@ exports.usersDesactived = async (req, res) => {
           model: models.t_poste_pos,
           as: "t_poste_pos",
           required: false,
-          attributes: ["pos_id", "pos_description","pos_debut","pos_fin", "pos_entreprise", "pre_id"],
+          attributes: [
+            "pos_id",
+            "pos_description",
+            "pos_debut",
+            "pos_fin",
+            "pos_entreprise",
+            "pre_id",
+          ],
         },
         {
           model: models.t_master_mas,
@@ -661,7 +667,14 @@ exports.usersActived = async (req, res) => {
           model: models.t_poste_pos,
           as: "t_poste_pos",
           required: false,
-          attributes: ["pos_id", "pos_description","pos_debut","pos_fin", "pos_entreprise", "pre_id"],
+          attributes: [
+            "pos_id",
+            "pos_description",
+            "pos_debut",
+            "pos_fin",
+            "pos_entreprise",
+            "pre_id",
+          ],
         },
         {
           model: models.t_master_mas,
