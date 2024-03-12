@@ -69,7 +69,7 @@ exports.activeRequestContact = async (req, res) => {
 };
 
 exports.deleteRequestContact = async (req, res) => {
-  const con_id = req.body;
+  const con_id = req.body.con_id;
   console.log(username);
   try {
     const columns = await models.t_contact_con.destroy({
