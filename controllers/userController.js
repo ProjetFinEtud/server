@@ -70,7 +70,7 @@ exports.activeRequestContact = async (req, res) => {
 
 exports.deleteRequestContact = async (req, res) => {
   const {con_id} = req.body;
-  console.log(username);
+  console.log("iddddddd" + con_id);
   try {
     const columns = await models.t_contact_con.destroy({
       where: { con_id: con_id },
