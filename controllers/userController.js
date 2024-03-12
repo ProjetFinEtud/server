@@ -83,6 +83,7 @@ exports.deleteRequestContact = async (req, res) => {
     });
   }
 };
+
 exports.refusedRequestContact = async (req, res) => {
   username = req.user.username;
   const { con_id } = req.body;
