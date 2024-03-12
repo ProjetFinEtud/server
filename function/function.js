@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const multer = require("multer")
 const bcrypt = require("bcryptjs");
 const express = require('express');
+const path = require("path")
 // Fonction pour hacher un mot de passe avec SHA-256
 function hashPassword(password) {
   const pass = password + "MasterEgel";
