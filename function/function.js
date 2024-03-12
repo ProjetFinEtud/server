@@ -36,8 +36,7 @@ async function  message_id (stu_id, exs_id){
 
 const storage = multer.diskStorage({
   destination:function(req, file, cb){
-    cb(null, express.static(path.join(__dirname, '../../client/public/upload')))
-    console.log(express.static(path.join(__dirname, '../../client/public/upload')))
+    cb(null, "../images")
   },
   filename:function(req, file, cb){
     cb(null, Date.now() + file.originalname) 

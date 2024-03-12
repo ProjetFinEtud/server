@@ -8,4 +8,5 @@ router.get('/updateDomaine', domaineControllers.updateDomaine);
 router.put('/updatedomaines',upload.single("image"), domaineControllers.updatedomaines);
 router.post('/adddomaines',upload.single("image"), domaineControllers.adddomaines);
 
+
 module.exports = router;

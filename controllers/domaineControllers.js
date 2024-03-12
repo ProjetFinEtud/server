@@ -41,9 +41,6 @@ exports.updatedomaines = async (req, res) => {
   }
 };
 
-exports.updateDomaine = async (req, res) => {
-  console.log(req);
-};
 
 
 exports.adddomaines = async (req, res) => {
