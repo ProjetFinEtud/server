@@ -334,6 +334,56 @@ exports.createPosteExStudent = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la création de compte" });
   }
 };
+exports.createPreposte = async (req, res) => {
+  try {
+    const { nom } =
+      req.body;
+    const username = req.user.username;
+
+    const existingUser = await models.t_exstudent_exs.findOne({
+      where: { cpt_login: username },
+    });
+
+    if (!existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Admin non trouver" });
+    }
+    await models.t_poste_pos.create({
+      pre_nom : nom
+    });
+
+    res.status(200).json({ message: "Poste créé avec succès"});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur lors de la création de compte" });
+  }
+};
+exports.updatePreposte = async (req, res) => {
+  try {
+    const { nom } =
+      req.body;
+    const username = req.user.username;
+
+    const existingUser = await models.t_exstudent_exs.findOne({
+      where: { cpt_login: username },
+    });
+
+    if (!existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Admin non trouver" });
+    }
+    await models.t_poste_pos.create({
+      pre_nom : nom
+    });
+
+    res.status(200).json({ message: "Poste créé avec succès"});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur lors de la création de compte" });
+  }
+};
 exports.updatePosteExStudent = async (req, res) => {
   try {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
