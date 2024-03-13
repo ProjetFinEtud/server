@@ -307,13 +307,45 @@ exports.createPosteExStudent = async (req, res) => {
 
     // Créer l'utilisateur
     const newUser = await models.t_poste_pos.create({
-      pos_nom: nomPoste,
       pos_entreprise: nomEntreprise,
       pos_debut: dateDebut,
       pos_fin: dateFin,
       pos_description: descriptionPoste,
+      pre_id : nomPoste,
       exs_id: existingUser.exs_id,
     });
+
+    res.status(200).json({ message: "Poste créé avec succès", user: newUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur lors de la création de compte" });
+  }
+};
+exports.updatePosteExStudent = async (req, res) => {
+  try {
+    const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
+      req.body;
+    const id = req.params.id
+    const username = req.user.username;
+    const existingUser = await models.t_exstudent_exs.findOne({
+      where: { cpt_login: username },
+    });
+
+    if (!existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Un utilisateur avec cet e-mail existe déjà" });
+    }
+
+    // Créer l'utilisateur
+    const newUser = await models.t_poste_pos.update({
+      pos_entreprise: nomEntreprise,
+      pos_debut: dateDebut,
+      pos_fin: dateFin,
+      pos_description: descriptionPoste,
+      pre_id : nomPoste,
+      exs_id: existingUser.exs_id,
+    },{where : {pre_id : nomPoste}} );
 
     res.status(200).json({ message: "Poste créé avec succès", user: newUser });
   } catch (err) {
