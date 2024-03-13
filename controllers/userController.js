@@ -85,12 +85,11 @@ exports.deleteRequestContact = async (req, res) => {
 };
 
 exports.refusedRequestContact = async (req, res) => {
-  username = req.user.username;
-  const { con_id } = req.body;
+  const  con_id  = req.params.id;
   console.log(username);
   try {
     const columns = await models.t_contact_con.update(
-      { con_etat: "Demande en cours" },
+      { con_etat: "Refuser" },
       { where: { con_id: con_id } }
     );
     res.json({ message: "Modification éffectuer" });

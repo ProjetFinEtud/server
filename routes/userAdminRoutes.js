@@ -19,7 +19,7 @@ router.put('/activateRequestContact/:id', userController.activeRequestContact);
 router.delete('/deleteRequestContact/:id', userController.deleteRequestContact);
 
 router.delete('/userDeleteHisAccount', userController.userDeletehisAccount);
-router.put('/refusedRequestContact', userController.refusedRequestContact);
+router.put('/refusedRequestContact/:id', userController.refusedRequestContact);
 router.put('/changelocalisation', userController.changeLocalisation);
 router.put('/activateUsers',authMiddlewareAdmin, userController.activeUsers);
 router.get('/usersActived', userController.usersActived);
