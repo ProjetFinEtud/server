@@ -407,8 +407,14 @@ exports.creatAcc = async (req, res) => {
   try {
     const { title, text } = req.body;
 
+    const username = req.user.username
+
+    const admin = await models.t_admin_adm.findOne({
+      where : {cpt_login : username}
+    })
+
     const newUser = await models.t_accueil_acc.create({
-      acc_titre: title, acc_texte: text
+      acc_titre: title, acc_texte: text, adm_id : admin.adm_id
     });
 
 
