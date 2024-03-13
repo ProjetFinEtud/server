@@ -18,6 +18,17 @@ exports.getAllUsers = async (req, res) => {
       .json({ message: "Erreur lors de la récupération des utilisateurs" });
   }
 };
+exports.getAllAcc = async (req, res) => {
+  try {
+    const columns = await models.t_accueil_acc.findAll();
+    res.json({ columns });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la récupération des textes de l'acceuil" });
+  }
+};
 exports.geStudentContact = async (req, res) => {
   username = req.user.username;
   console.log(username);
@@ -390,6 +401,37 @@ exports.createAdmin = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Erreur lors de la création de compte" });
+  }
+};
+exports.creatAcc = async (req, res) => {
+  try {
+    const { title, text } = req.body;
+
+    const newUser = await models.t_accueil_acc.create({
+      acc_titre: title, acc_texte: text
+    });
+
+
+    res.status(200).json({ message: "Accueil créé avec succès" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur lors de la création" });
+  }
+};
+exports.updateAcc = async (req, res) => {
+  try {
+    const { title, text } = req.body;
+    const id = req.params.id
+     await models.t_accueil_acc.update(
+      {acc_titre: title, acc_texte: text},
+      {where:{acc_id : id}},
+    );
+
+
+    res.status(200).json({ message: "Accueil créé update succès" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Erreur lors de update" });
   }
 };
 exports.sendAsk = async (req, res) => {
