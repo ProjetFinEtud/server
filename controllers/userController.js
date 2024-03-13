@@ -328,6 +328,8 @@ exports.updatePosteExStudent = async (req, res) => {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
       req.body;
     const id = req.params.id
+
+    console.log(nomPoste + " " + nomEntreprise + " " + dateDebut + " " + dateFin + " " + id)
     const username = req.user.username;
     const existingUser = await models.t_exstudent_exs.findOne({
       where: { cpt_login: username },
@@ -347,7 +349,7 @@ exports.updatePosteExStudent = async (req, res) => {
       pos_description: descriptionPoste,
       pre_id : nomPoste,
       exs_id: existingUser.exs_id,
-    },{where : {pre_id : nomPoste}} );
+    },{where : {pos_id : id}} );
 
     res.status(200).json({ message: "Poste créé avec succès", user: newUser });
   } catch (err) {
