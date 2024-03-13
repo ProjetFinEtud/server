@@ -17,6 +17,7 @@ router.put('/activate',authMiddlewareAdmin, userController.activeUser);
 router.get('/userDesactived',authMiddlewareAdmin, userController.usersDesactived);
 router.put('/activateRequestContact/:id', userController.activeRequestContact);
 router.delete('/deleteRequestContact/:id', userController.deleteRequestContact);
+
 router.delete('/userDeleteHisAccount', userController.userDeletehisAccount);
 router.put('/refusedRequestContact', userController.refusedRequestContact);
 router.put('/changelocalisation', userController.changeLocalisation);
