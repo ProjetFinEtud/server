@@ -292,6 +292,8 @@ exports.createPosteExStudent = async (req, res) => {
   try {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
       req.body;
+
+    console.log(nomPoste + " " + nomEntreprise + " " + dateDebut + " " + dateFin )
     const username = req.user.username;
 
     // Vérifier si l'utilisateur existe déjà avec le même e-mail
