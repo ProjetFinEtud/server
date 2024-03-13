@@ -14,7 +14,7 @@ router.post('/createposte', userController.createPosteExStudent);
 router.post('/createadmin', authMiddlewareAdmin, userController.createAdmin);
 router.post('/sendask', userController.sendAsk);
 router.put('/activate',authMiddlewareAdmin, userController.activeUser);
-router.put('/updateposte:id',authMiddlewareAdmin, userController.updatePosteExStudent);
+router.put('/updateposte/:id',authMiddlewareAdmin, userController.updatePosteExStudent);
 router.get('/userDesactived',authMiddlewareAdmin, userController.usersDesactived);
 router.put('/activateRequestContact/:id', userController.activeRequestContact);
 router.delete('/deleteRequestContact/:id', userController.deleteRequestContact);
