@@ -340,7 +340,7 @@ exports.createPreposte = async (req, res) => {
       req.body;
     const username = req.user.username;
 
-    const existingUser = await models.t_compte_cpt.findOne({
+    const existingUser = await models.t_admin_adm.findOne({
       where: { cpt_login: username },
     });
 
@@ -350,7 +350,7 @@ exports.createPreposte = async (req, res) => {
         .json({ message: "Admin non trouver" });
     }
     await models.t_poste_pos.create({
-      pre_nom : nom
+      pre_nom : nom, adm_id:existingUser.adm_id
     });
 
     res.status(200).json({ message: "Poste créé avec succès"});
@@ -364,8 +364,9 @@ exports.updatePreposte = async (req, res) => {
     const { nom } =
       req.body;
     const username = req.user.username;
+    const id = req.params.id
 
-    const existingUser = await models.t_compte_cpt.findOne({
+    const existingUser = await models.t_admin_adm.findOne({
       where: { cpt_login: username },
     });
 
@@ -374,9 +375,9 @@ exports.updatePreposte = async (req, res) => {
         .status(400)
         .json({ message: "Admin non trouver" });
     }
-    await models.t_poste_pos.create({
-      pre_nom : nom
-    });
+    await models.t_poste_pos.update(
+      {pre_nom : nom}, {where : {pos_id : id}}
+      );
 
     res.status(200).json({ message: "Poste créé avec succès"});
   } catch (err) {
