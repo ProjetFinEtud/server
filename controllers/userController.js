@@ -376,7 +376,7 @@ exports.updatePreposte = async (req, res) => {
         .json({ message: "Admin non trouver" });
     }
     await models.t_preposte_pre.update(
-      {pre_nom : nom}, {where : {pos_id : id}}
+      {pre_nom : nom}, {where : {pre_id : id}}
       );
 
     res.status(200).json({ message: "Poste créé avec succès"});
