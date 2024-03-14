@@ -398,3 +398,15 @@ exports.allPostes = async (req, res) => {
       .json({ message: "Erreur lors de la récupération des utilisateurs" });
   }
 };
+
+exports.getAllAcc = async (req, res) => {
+  try {
+    const columns = await models.t_accueil_acc.findAll();
+    res.json({ columns });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la récupération des textes de l'acceuil" });
+  }
+};

@@ -11,5 +11,6 @@ router.post('/createxstudent', authController.createUserExStudent);
 router.get('/verifAuth', authController.verifAuth);
 router.put('/updatepass', authController.Updatepass);
 router.put('/resetpassword', authController.ResetPassword);
+router.get('/allAcc', authController.getAllAcc);
 
 module.exports = router;
