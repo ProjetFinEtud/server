@@ -349,7 +349,7 @@ exports.createPreposte = async (req, res) => {
         .status(400)
         .json({ message: "Admin non trouver" });
     }
-    await models.t_poste_pos.create({
+    await models.t_preposte_pre.create({
       pre_nom : nom, adm_id:existingUser.adm_id
     });
 
@@ -375,7 +375,7 @@ exports.updatePreposte = async (req, res) => {
         .status(400)
         .json({ message: "Admin non trouver" });
     }
-    await models.t_poste_pos.update(
+    await models.t_preposte_pre.update(
       {pre_nom : nom}, {where : {pos_id : id}}
       );
 
