@@ -340,7 +340,7 @@ exports.createPreposte = async (req, res) => {
       req.body;
     const username = req.user.username;
 
-    const existingUser = await models.t_exstudent_exs.findOne({
+    const existingUser = await models.t_compte_cpt.findOne({
       where: { cpt_login: username },
     });
 
@@ -365,7 +365,7 @@ exports.updatePreposte = async (req, res) => {
       req.body;
     const username = req.user.username;
 
-    const existingUser = await models.t_exstudent_exs.findOne({
+    const existingUser = await models.t_compte_cpt.findOne({
       where: { cpt_login: username },
     });
 
