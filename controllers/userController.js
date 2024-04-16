@@ -18,6 +18,8 @@ exports.getAllUsers = async (req, res) => {
       .json({ message: "Erreur lors de la récupération des utilisateurs" });
   }
 };
+
+// importer dans acc
 exports.getAllAcc = async (req, res) => {
   try {
     const columns = await models.t_accueil_acc.findAll();
@@ -29,6 +31,8 @@ exports.getAllAcc = async (req, res) => {
       .json({ message: "Erreur lors de la récupération des textes de l'acceuil" });
   }
 };
+
+// importer dans poste
 exports.geStudentContact = async (req, res) => {
   username = req.user.username;
   console.log(username);
@@ -46,6 +50,8 @@ exports.geStudentContact = async (req, res) => {
     });
   }
 };
+
+// importer dans contact
 exports.geExsContact = async (req, res) => {
   username = req.user.username;
   console.log(username);
@@ -62,6 +68,8 @@ exports.geExsContact = async (req, res) => {
     });
   }
 };
+
+// importer dans contatc
 exports.activeRequestContact = async (req, res) => {
   const con_id = req.params.id; // Récupérer l'ID à partir des paramètres de requête
   console.log("ID reçu :", con_id);
@@ -79,6 +87,7 @@ exports.activeRequestContact = async (req, res) => {
   }
 };
 
+// importer dans contact
 exports.deleteRequestContact = async (req, res) => {
   const  con_id  = req.params.id;
   console.log(con_id);
@@ -95,6 +104,7 @@ exports.deleteRequestContact = async (req, res) => {
   }
 };
 
+// importer dans contact
 exports.refusedRequestContact = async (req, res) => {
   const  con_id  = req.params.id;
   console.log(username);
@@ -128,7 +138,7 @@ exports.changeLocalisation = async (req, res) => {
     });
   }
 };
-
+// importer dans poste
 exports.getAllPostesUser = async (req, res) => {
   username = req.user.username;
   try {
@@ -147,6 +157,7 @@ exports.getAllPostesUser = async (req, res) => {
       .json({ message: "Erreur lors de la récupération des utilisateurs" });
   }
 };
+// importer dans poste
 exports.getAllPrePostes = async (req, res) => {
   try {
     const pre_post = await models.t_preposte_pre.findAll();
@@ -298,7 +309,7 @@ exports.Updatepass = async (req, res) => {
       .json({ message: "Erreur lors de la récupération des utilisateurs" });
   }
 };
-
+// impoter dans poste
 exports.createPosteExStudent = async (req, res) => {
   try {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
@@ -334,6 +345,7 @@ exports.createPosteExStudent = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la création de compte" });
   }
 };
+// importer dans poste
 exports.createPreposte = async (req, res) => {
   try {
     const { nom } =
@@ -359,6 +371,7 @@ exports.createPreposte = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la création de compte" });
   }
 };
+// importer dans poste
 exports.updatePreposte = async (req, res) => {
   try {
     const { nom } =
@@ -385,6 +398,7 @@ exports.updatePreposte = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la création de compte" });
   }
 };
+// importer dans poste
 exports.updatePosteExStudent = async (req, res) => {
   try {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
@@ -475,6 +489,7 @@ exports.creatAcc = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la création" });
   }
 };
+// importer dans acc
 exports.updateAcc = async (req, res) => {
   try {
     const { title, text } = req.body;

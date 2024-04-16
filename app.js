@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const authMiddlewareAdmin = require('./middleware/authAdminMiddleware.js');
-const authMiddlewareExStudent = require('./middleware/authExStudentMiddleware.js');
 const authMiddleware = require('./middleware/authMiddleware.js');
 const sequelize = require('./config/db');
 const path = require("path")
@@ -19,33 +18,28 @@ sequelize.sync({ force: false }).then(() => {
 app.use(express.json());
 app.use(cors());
 
-// app.use(express.static("./client/build"))
-
-// app.use("/", (_, res) => {
-//   res.send("Hello word !")
-// })
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userAdminRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
 const domaineRoutes = require('./routes/domaineRoutes.js')
 const masterRoutes = require('./routes/masterRoutes.js')
-const carteRoutes = require('./routes/carteRoutes.js')
+const accueilRoutes = require('./routes/accRoutes.js')
+const contactRoutes = require('./routes/contactRoutes.js')
+const posteRoutes = require('./routes/posteRoutes')
 
+
+app.use('/poste', posteRoutes);
+app.use('/contact',authMiddleware, contactRoutes);
+app.use('/accueil', accueilRoutes);
 
 app.use('/auth', authRoutes);
 app.use('/user',authMiddleware, userRoutes);
 app.use('/domaine',authMiddlewareAdmin, domaineRoutes);
 app.use('/master',authMiddlewareAdmin, masterRoutes);
-app.use('/carte', carteRoutes);
+
 
 app.use('/images', express.static(path.join(__dirname, './images/')));
-
-// app.use("*/", (_, res) => {
-//   res.sendFile(path.join(__dirname, 'client/build/index.html'))
-// })
-
-
 
 
 // Port d'écoute
