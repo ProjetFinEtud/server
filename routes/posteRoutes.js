@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const posteController = require('../controllers/posteController');
 const authMiddlewareAdmin = require('../middleware/authAdminMiddleware.js');
-const authMiddleware = require('./middleware/authMiddleware.js');
+const authMiddleware = require('../middleware/authMiddleware.js');
 
 
 router.get('/allPostes', authMiddleware, posteController.getAllPostesUser);
