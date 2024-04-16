@@ -13,8 +13,8 @@ router.post('/createPreposte',authMiddlewareAdmin, posteController.createPrepost
 
 router.put('/updateposte/:id',authMiddlewareAdmin, posteController.updatePosteExStudent);
 
-router.post('/createposte',authMiddlewareAdmin, posteController.createPosteExStudent);
+router.post('/createposte',authMiddleware, posteController.createPosteExStudent);
 
-router.put('/updatePreposte/:id',authMiddlewareAdmin, posteController.updatePreposte);
+router.put('/updatePreposte/:id',authMiddleware, posteController.updatePreposte);
 
 module.exports = router;
