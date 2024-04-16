@@ -4,13 +4,11 @@ var models = initModels(sequelize);
 
 exports.geStudentContact = async (req, res) => {
   username = req.user.username;
-  console.log(username);
   try {
     const columns = await models.t_contact_con.findAll({
       where: { stu_login: username },
     });
 
-    console.log(columns);
     res.json({ columns });
   } catch (err) {
     console.error(err);
@@ -22,12 +20,10 @@ exports.geStudentContact = async (req, res) => {
 
 exports.geExsContact = async (req, res) => {
   username = req.user.username;
-  console.log(username);
   try {
     const columns = await models.t_contact_con.findAll({
       where: { exs_login: username },
     });
-    console.log(columns);
     res.json({ columns });
   } catch (err) {
     console.error(err);
@@ -39,7 +35,6 @@ exports.geExsContact = async (req, res) => {
 
 exports.activeRequestContact = async (req, res) => {
   const con_id = req.params.id; // Récupérer l'ID à partir des paramètres de requête
-  console.log("ID reçu :", con_id);
   try {
     const columns = await models.t_contact_con.update(
       { con_etat: "Accepter" },
@@ -56,7 +51,6 @@ exports.activeRequestContact = async (req, res) => {
 
 exports.deleteRequestContact = async (req, res) => {
   const con_id = req.params.id;
-  console.log(con_id);
   try {
     const columns = await models.t_contact_con.destroy({
       where: { con_id: con_id },
@@ -72,7 +66,6 @@ exports.deleteRequestContact = async (req, res) => {
 
 exports.refusedRequestContact = async (req, res) => {
   const con_id = req.params.id;
-  console.log(username);
   try {
     const columns = await models.t_contact_con.update(
       { con_etat: "Refuser" },
@@ -91,7 +84,6 @@ exports.sendAsk = async (req, res) => {
   try {
     const { exs_id } = req.body;
 
-    console.log("l'id de l'utilisateur : " + exs_id);
 
     const existingUser = await models.t_exstudent_exs.findOne({
       where: { exs_id: exs_id },
@@ -113,13 +105,11 @@ exports.sendAsk = async (req, res) => {
       });
     }
 
-    console.log("Les logins" + existingUser.cpt_login + " " + stu_login);
 
     const currentDate = sequelize.literal("CURRENT_TIMESTAMP");
 
     const msg_id = Date.now();
 
-    console.log("message id" + msg_id);
 
     const newUser = await models.t_contact_con.create({
       con_etat: "Demande en cours",

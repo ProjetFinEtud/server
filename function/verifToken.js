@@ -1,10 +1,8 @@
 const jwt = require("jsonwebtoken");
 
 const verifToken = (req, res, next) => {
-    console.log(req.headers['authorization'])
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];  
-    console.log(token)
     if (token == null) return res.sendStatus(401);
     
     jwt.verify(token, 'secretkey', (err, decoded) => {
@@ -15,7 +13,6 @@ const verifToken = (req, res, next) => {
 }
 const verifToken2 = (req, res, next) => {
     const accessToken = req.headers["accesstoken"];
-    console.log(accessToken)
     if (!accessToken) {
       return res.status(401).json("L'utilisateur n'est pas connecté");
     }

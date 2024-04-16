@@ -46,12 +46,10 @@ exports.updatedomaines = async (req, res) => {
 exports.adddomaines = async (req, res) => {
   try {
     const { dom_nom, dom_id } = req.body;
-    console.log(dom_nom)
     var id = null
     var image = null;
     if (req.file && req.file.filename !== null) {
       image = req.file.filename;
-      console.log(image)
     }
 
     if (image) {

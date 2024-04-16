@@ -13,3 +13,4 @@ router.put('/updatepass', authController.Updatepass);
 router.put('/resetpassword', authController.ResetPassword);
 
 module.exports = router;
+

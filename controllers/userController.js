@@ -35,13 +35,11 @@ exports.getAllAcc = async (req, res) => {
 // importer dans poste
 exports.geStudentContact = async (req, res) => {
   username = req.user.username;
-  console.log(username);
   try {
     const columns = await models.t_contact_con.findAll({
       where: { stu_login: username },
     });
 
-    console.log(columns);
     res.json({ columns });
   } catch (err) {
     console.error(err);
@@ -54,12 +52,10 @@ exports.geStudentContact = async (req, res) => {
 // importer dans contact
 exports.geExsContact = async (req, res) => {
   username = req.user.username;
-  console.log(username);
   try {
     const columns = await models.t_contact_con.findAll({
       where: { exs_login: username },
     });
-    console.log(columns);
     res.json({ columns });
   } catch (err) {
     console.error(err);
@@ -72,7 +68,6 @@ exports.geExsContact = async (req, res) => {
 // importer dans contatc
 exports.activeRequestContact = async (req, res) => {
   const con_id = req.params.id; // Récupérer l'ID à partir des paramètres de requête
-  console.log("ID reçu :", con_id);
   try {
     const columns = await models.t_contact_con.update(
       { con_etat: "Accepter" },
@@ -90,7 +85,6 @@ exports.activeRequestContact = async (req, res) => {
 // importer dans contact
 exports.deleteRequestContact = async (req, res) => {
   const  con_id  = req.params.id;
-  console.log(con_id);
   try {
     const columns = await models.t_contact_con.destroy({
       where: { con_id: con_id },
@@ -107,7 +101,6 @@ exports.deleteRequestContact = async (req, res) => {
 // importer dans contact
 exports.refusedRequestContact = async (req, res) => {
   const  con_id  = req.params.id;
-  console.log(username);
   try {
     const columns = await models.t_contact_con.update(
       { con_etat: "Refuser" },
@@ -124,7 +117,6 @@ exports.refusedRequestContact = async (req, res) => {
 exports.changeLocalisation = async (req, res) => {
   username = req.user.username;
   const { lat, lng } = req.body;
-  console.log(req.body);
   try {
     const columns = await models.t_exstudent_exs.update(
       { exs_laltitude: lat, exs_longitude: lng },
@@ -205,12 +197,10 @@ exports.deleteUser = async (req, res) => {
     }
 
     if (existingUser) {
-      console.log("login " + existingUser.cpt_login);
       await models.t_compte_cpt.destroy({
         where: { cpt_login: existingUser.cpt_login },
       });
     }
-    console.log(raisonSup);
     sendDeletUserIvalide(existingUser[mail], raisonSup);
     res.status(200).json({ message: "Suppression réussi" });
   } catch (err) {
@@ -257,7 +247,6 @@ exports.userDeletehisAccount = async (req, res) => {
     }
 
     if (existingUser) {
-      console.log("login " + existingUser.cpt_login);
       await models.t_compte_cpt.destroy({
         where: { cpt_login: existingUser.cpt_login },
       });
@@ -276,7 +265,6 @@ exports.userDeletehisAccount = async (req, res) => {
 exports.Updatepass = async (req, res) => {
   try {
     const { username, password, newpassword, confirmpassword } = req.body;
-    console.log("ok");
     const existingUser = await models.t_compte_cpt.findOne({
       where: { cpt_login: username },
     });
@@ -285,15 +273,12 @@ exports.Updatepass = async (req, res) => {
       return res.status(401).json({ message: "L'utilisateur n'existe pas" });
     }
     let verif = await bcrypt.compareSync(password, existingUser.cpt_mdp);
-    console.log(existingUser.cpt_mdp);
     if (!verif) {
       return res.status(401).json({ message: "Mot de passe incorrect" });
     }
 
     // Générer un sel pour le hachage avec bcrypt
     const salt = await bcrypt.genSalt();
-
-    console.log(salt);
 
     // Hacher le mot de passe avec le sel
     const hashpass = await bcrypt.hash(newpassword, salt);
@@ -315,7 +300,6 @@ exports.createPosteExStudent = async (req, res) => {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
       req.body;
 
-    console.log(nomPoste + " " + nomEntreprise + " " + dateDebut + " " + dateFin )
     const username = req.user.username;
 
     // Vérifier si l'utilisateur existe déjà avec le même e-mail
@@ -405,7 +389,6 @@ exports.updatePosteExStudent = async (req, res) => {
       req.body;
     const id = req.params.id
 
-    console.log(nomPoste + " " + nomEntreprise + " " + dateDebut + " " + dateFin + " " + id)
     const username = req.user.username;
     const existingUser = await models.t_exstudent_exs.findOne({
       where: { cpt_login: username },
@@ -510,8 +493,6 @@ exports.sendAsk = async (req, res) => {
   try {
     const { exs_id } = req.body;
 
-    console.log("l'id de l'utilisateur : " + exs_id);
-
     const existingUser = await models.t_exstudent_exs.findOne({
       where: { exs_id: exs_id },
     });
@@ -532,13 +513,10 @@ exports.sendAsk = async (req, res) => {
       });
     }
 
-    console.log("Les logins" + existingUser.cpt_login + " " + stu_login);
 
     const currentDate = sequelize.literal("CURRENT_TIMESTAMP");
 
     const msg_id = Date.now();
-
-    console.log("message id" + msg_id);
 
     const newUser = await models.t_contact_con.create({
       con_etat: "Demande en cours",
@@ -637,7 +615,6 @@ exports.activeUser = async (req, res) => {
 };
 exports.activeUsers = async (req, res) => {
   const { pseudos } = req.body;
-  console.log(pseudos);
   let existingUserExs, existingUserStu, existingUser;
   let attribut_mail;
 
@@ -696,7 +673,6 @@ exports.activeUsers = async (req, res) => {
           { cpt_etat: 1 },
           { where: { cpt_login: pseudo } }
         );
-        console.log(attribut_mail);
          await sendEmailValidation(
           existingUser[attribut_mail],
           existingUser.cpt_login,
@@ -834,7 +810,6 @@ exports.usersActived = async (req, res) => {
       ],
     });
 
-    console.log(exstudents);
 
     // Récupérer les étudiants désactivés
     const students = await models.t_student_stu.findAll({
@@ -857,10 +832,8 @@ exports.usersActived = async (req, res) => {
       ],
     });
 
-    console.log(students);
     // Fusionner les résultats des deux requêtes
     const users = [...exstudents, ...students];
-    console.log(users);
     // Envoyer les utilisateurs fusionnés
     res.status(200).json(users);
   } catch (err) {
@@ -906,7 +879,6 @@ exports.usersExstudentActived = async (req, res) => {
       ],
     });
 
-    console.log(exstudents);
     // Envoyer les utilisateurs fusionnés
     res.status(200).json(exstudents);
   } catch (err) {
@@ -924,7 +896,6 @@ exports.userInfoExstudent = async (req, res) => {
       where: { cpt_login: cpt_login },
     });
 
-    console.log(exstudents);
     // Envoyer les utilisateurs fusionnés
     res.status(200).json(exstudents);
   } catch (err) {
@@ -942,7 +913,6 @@ exports.userInfoAdmin = async (req, res) => {
       where: { cpt_login: cpt_login },
     });
 
-    console.log(admin);
     // Envoyer les utilisateurs fusionnés
     res.status(200).json(admin);
   } catch (err) {
@@ -960,7 +930,6 @@ exports.userInfoStudent = async (req, res) => {
       where: { cpt_login: cpt_login },
     });
 
-    console.log(student);
     // Envoyer les utilisateurs fusionnés
     res.status(200).json(student);
   } catch (err) {
@@ -973,7 +942,6 @@ exports.userInfoStudent = async (req, res) => {
 
 exports.updateExsinfo = async (req, res) => {
   try {
-    console.log("okokko" + req.user.username);
     const { exs_nom, exs_prenom, exs_email, exs_description } = req.body;
     const cpt_login = req.user.username;
     var image = null;
@@ -1008,7 +976,6 @@ exports.updateExspassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
-    console.log("okok" + req.body);
     const username = req.user.username;
 
     const existingUser = await models.t_compte_cpt.findOne({
@@ -1028,7 +995,6 @@ exports.updateExspassword = async (req, res) => {
     // Générer un sel pour le hachage avec bcrypt
     const salt = await bcrypt.genSalt();
 
-    //console.log(salt);
 
     // Hacher le mot de passe avec le sel
     const hashpass = await bcrypt.hash(newPassword, salt);

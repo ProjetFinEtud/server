@@ -36,7 +36,6 @@ const sendEmailWelcome = async (to) => {
 };
 
 const sendEmailForgotPassword = async (to, password) => {
-  console.log(to);
   const request = mailjet.post("send", { version: "v3.1" }).request({
     Messages: [
       {
@@ -68,7 +67,6 @@ const sendEmailForgotPassword = async (to, password) => {
 };
 
 const sendEmailValidation = async (to, nomUti, password) => {
-  console.log(to);
   const request = mailjet.post("send", { version: "v3.1" }).request({
     Messages: [
       {

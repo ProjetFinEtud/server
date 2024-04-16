@@ -64,17 +64,6 @@ exports.updatePosteExStudent = async (req, res) => {
       req.body;
     const id = req.params.id;
 
-    console.log(
-      nomPoste +
-        " " +
-        nomEntreprise +
-        " " +
-        dateDebut +
-        " " +
-        dateFin +
-        " " +
-        id
-    );
     const username = req.user.username;
     const existingUser = await models.t_exstudent_exs.findOne({
       where: { cpt_login: username },
@@ -110,10 +99,6 @@ exports.createPosteExStudent = async (req, res) => {
   try {
     const { nomPoste, descriptionPoste, nomEntreprise, dateDebut, dateFin } =
       req.body;
-
-    console.log(
-      nomPoste + " " + nomEntreprise + " " + dateDebut + " " + dateFin
-    );
     const username = req.user.username;
 
     // Vérifier si l'utilisateur existe déjà avec le même e-mail

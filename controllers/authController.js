@@ -74,14 +74,12 @@ exports.allMaster = async (req, res) => {
 };
 exports.verifAuth = async (req, res) => {
   const accessToken = req.headers["accesstoken"];
-  console.log(accessToken);
   if (!accessToken) {
     return res.status(401).json("L'utilisateur n'est pas connecté");
   }
 
   try {
     const decoded = jwt.verify(accessToken, "secretkey");
-    console.log(decoded);
     if (decoded.userType === "admin") {
       res.status(202).json("Utilisateur Admin");
     } else if (decoded.userType === "exStudent") {
@@ -182,7 +180,6 @@ exports.createUserExStudent = async (req, res) => {
       where: { exs_email: email },
     });
 
-    console.log("les années : " + annee + " " + annee_debut + " " + annee_fin);
     if (existingUser) {
       return res
         .status(400)
@@ -277,7 +274,6 @@ exports.Updatepass = async (req, res) => {
     const existingUser = await models.t_compte_cpt.findOne({
       where: { cpt_login: username },
     });
-    console.log(existingUser);
 
     if (!existingUser) {
       return res.status(401).json({ message: "L'utilisateur n'existe pas" });

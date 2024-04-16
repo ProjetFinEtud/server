@@ -10,6 +10,7 @@ router.post('/createadmin', authMiddlewareAdmin, userController.createAdmin);
 
 router.put('/activate',authMiddlewareAdmin, userController.activeUser);
 
+
 router.get('/userDesactived',authMiddlewareAdmin, userController.usersDesactived);
 
 router.delete('/userDeleteHisAccount', userController.userDeletehisAccount);
